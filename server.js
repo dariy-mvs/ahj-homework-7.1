@@ -1,9 +1,11 @@
+const cors = require('@koa/cors');
 const Koa = require('koa');
 const koaBody = require('koa-body');
-const cors = require('@koa/cors');
 // const http = require('http');
 
 const app = new Koa();
+
+app.use(cors());
 
 app.use(koaBody({
   urlencoded: true,
@@ -11,8 +13,6 @@ app.use(koaBody({
   json: true,
   multipart: true,
 }));
-
-app.use(cors());
 
 const tickets = new Map();
 
