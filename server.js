@@ -61,26 +61,21 @@ app.use(async (ctx) => {
       }
     }
   } else if (ctx.request.method === 'POST') {
-    // console.log(ctx.request.body);
-    const { taskName, taskDescr, created } = ctx.request.body;
-    const ticketId = tickets.size + 1;
-    tickets.set(ticketId, {
+    const { taskName, taskDescr, created, edit } = ctx.request.body;
+    if (edit) {
+      const ticketId = tickets.size + 1;
+      tickets.set(ticketId, {
       id: ticketId,
       name: taskName,
       status: false,
       created,
       description: taskDescr,
     });
-    // console.log(Array.from(tickets.values()));
-    ctx.body = { ok: true };
-    ctx.response.status = 200;
-    return;
-  } else if (ctx.request.method === 'PUT') {
-    const { id, taskName, taskDescr } = ctx.request.body;
-    const ticket = tickets.get(+id);
-    ticket.name = taskName;
-    ticket.description = taskDescr;
-    // console.log(tickets.get(id));
+    } else {
+      const ticket = tickets.get(+id);
+      ticket.name = taskName;
+      ticket.description = taskDescr;
+    };
     ctx.body = { ok: true };
     ctx.response.status = 200;
     return;
