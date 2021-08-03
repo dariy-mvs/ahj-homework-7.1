@@ -1,7 +1,7 @@
 const cors = require('@koa/cors');
 const Koa = require('koa');
 const koaBody = require('koa-body');
-const http = require('http');
+// const http = require('http');
 
 const app = new Koa();
 
@@ -19,10 +19,10 @@ const tickets = new Map();
 app.use(async (ctx) => {
   console.log(ctx.request.query);
   console.log(ctx.request.body);
+  let { id } = ctx.request.query;
+  const { method } = ctx.request.query;
+  id = +id;
   if (ctx.request.method === 'GET') {
-    let { id } = ctx.request.query;
-    const { method } = ctx.request.query;
-    id = +id;
     switch (method) {
       case 'allTickets': {
         const jsonArr = Array.from(tickets.values());
@@ -61,25 +61,27 @@ app.use(async (ctx) => {
       }
     }
   } else if (ctx.request.method === 'POST') {
-    const { taskName, taskDescr, created, edit } = ctx.request.body;
-    if (edit) {
+    const {
+      taskName, taskDescr, created, edit,
+    } = ctx.request.body;
+    if (!edit) {
       const ticketId = tickets.size + 1;
       tickets.set(ticketId, {
-      id: ticketId,
-      name: taskName,
-      status: false,
-      created,
-      description: taskDescr,
-    });
+        id: ticketId,
+        name: taskName,
+        status: false,
+        created,
+        description: taskDescr,
+      });
     } else {
       const ticket = tickets.get(+id);
       ticket.name = taskName;
       ticket.description = taskDescr;
-    };
+    }
     ctx.body = { ok: true };
     ctx.response.status = 200;
     return;
-  };
+  }
   ctx.body = { status: 'OK' };
   ctx.response.status = 200;
 });
