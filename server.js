@@ -32,20 +32,16 @@ app.use(async (ctx) => {
           status: el.status,
           created: el.created,
         }));
-          // console.log(jsonObject);
         ctx.response.body = resp;
         return;
       }
       case 'ticketById': {
-        // console.log(Array.from(tickets.values()))
         const answer = JSON.stringify(tickets.get(id));
-        // console.log(answer);
         ctx.response.body = answer;
         return;
       }
       case 'status': {
         const { status } = ctx.request.query;
-        // console.log(status);
         tickets.get(id).status = status;
         ctx.body = { ok: true };
         return;
@@ -82,6 +78,7 @@ app.use(async (ctx) => {
     ctx.response.status = 200;
     return;
   }
+  console.log('status');
   ctx.body = { status: 'OK' };
   ctx.response.status = 200;
 });
