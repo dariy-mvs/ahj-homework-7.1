@@ -17,6 +17,8 @@ app.use(koaBody({
 const tickets = new Map();
 
 app.use(async (ctx) => {
+  console.log(ctx.request.query);
+  console.log(ctx.request.body);
   if (ctx.request.method === 'GET') {
     let { id } = ctx.request.query;
     const { method } = ctx.request.query;
