@@ -1,7 +1,7 @@
 const cors = require('@koa/cors');
 const Koa = require('koa');
 const koaBody = require('koa-body');
-// const http = require('http');
+const http = require('http');
 
 const app = new Koa();
 
@@ -71,6 +71,7 @@ app.use(async (ctx) => {
     });
     // console.log(Array.from(tickets.values()));
     ctx.body = { ok: true };
+    ctx.response.status = 200;
     return;
   } else if (ctx.request.method === 'PUT') {
     const { id, taskName, taskDescr } = ctx.request.body;
@@ -79,17 +80,11 @@ app.use(async (ctx) => {
     ticket.description = taskDescr;
     // console.log(tickets.get(id));
     ctx.body = { ok: true };
+    ctx.response.status = 200;
     return;
-  } else if (ctx.request.method === 'PUT') {
-    const { id, taskName, taskDescr } = ctx.request.body;
-    const ticket = tickets.get(+id);
-    ticket.name = taskName;
-    ticket.description = taskDescr;
-    // console.log(tickets.get(id));
-    ctx.body = { ok: true };
-    return;
-  }
+  };
   ctx.body = { status: 'OK' };
+  ctx.response.status = 200;
 });
 
 const port = process.env.PORT || 7070;
