@@ -92,4 +92,6 @@ app.use(async (ctx) => {
   ctx.body = { status: 'OK' };
 });
 
-app.listen(7070, () => console.log('Server is works'));
+const port = process.env.PORT || 7070;
+
+app.listen(port, () => console.log('Server is works'));
