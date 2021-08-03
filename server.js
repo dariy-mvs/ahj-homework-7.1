@@ -19,10 +19,10 @@ const tickets = new Map();
 app.use(async (ctx) => {
   console.log(ctx.request.query);
   console.log(ctx.request.body);
-  let { id } = ctx.request.query;
-  const { method } = ctx.request.query;
-  id = +id;
   if (ctx.request.method === 'GET') {
+    let { id } = ctx.request.query;
+    const { method } = ctx.request.query;
+    id = +id;
     switch (method) {
       case 'allTickets': {
         const jsonArr = Array.from(tickets.values());
@@ -62,7 +62,7 @@ app.use(async (ctx) => {
     }
   } else if (ctx.request.method === 'POST') {
     const {
-      taskName, taskDescr, created, edit,
+      taskName, taskDescr, created, edit, id,
     } = ctx.request.body;
     if (!edit) {
       const ticketId = tickets.size + 1;
