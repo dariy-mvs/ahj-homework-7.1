@@ -74,11 +74,12 @@ app.use(async (ctx) => {
       ticket.name = taskName;
       ticket.description = taskDescr;
     }
+    console.log('status');
     ctx.body = { ok: true };
     ctx.response.status = 200;
+    console.log(ctx.response.status);
     return;
   }
-  console.log('status');
   ctx.body = { status: 'OK' };
   ctx.response.status = 200;
 });
